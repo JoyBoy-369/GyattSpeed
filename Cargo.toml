@@ -1,9 +1,16 @@
 [package]
-name = "text-editor"
+name = "text_editor"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+path = "src/main.rs"
+name = "text_editor"
 
 [dependencies]
 gl = "0.14.0"
@@ -12,5 +19,3 @@ glutin-winit = "0.4.2"
 glyph_brush = "0.7.8"
 raw-window-handle = "0.5.2"
 winit = "0.29.10"
-
-[dev-dependencies]

@@ -1065,7 +1065,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "text-editor"
+name = "text_editor"
 version = "0.1.0"
 dependencies = [
  "gl",
