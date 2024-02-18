@@ -4,11 +4,24 @@ use gl::types::{GLchar, GLenum, GLint, GLuint};
 
 pub type Res<T> = Result<T, Box<dyn std::error::Error>>;
 
+pub fn gl_err_to_str(err: u32) -> &'static str {
+    match err {
+        gl::INVALID_ENUM => "INVALID_ENUM",
+        gl::INVALID_VALUE => "INVALID_VALUE",
+        gl::INVALID_OPERATION => "INVALID_OPERATION",
+        gl::INVALID_FRAMEBUFFER_OPERATION => "INVALID_FRAMEBUFFER_OPERATION",
+        gl::OUT_OF_MEMORY => "OUT_OF_MEMORY",
+        gl::STACK_UNDERFLOW => "STACK_UNDERFLOW",
+        gl::STACK_OVERFLOW => "STACK_OVERFLOW",
+        _ => "UNKNOWN",
+    }
+}
+
 #[macro_export]
 macro_rules! gl_assert_ok {
     () => {{
         let err = gl::GetError();
-        assert_eq!(err, gl::NO_ERROR, "{}", gl_err_to_str(err));
+        assert_eq!(err, gl::NO_ERROR, "{}", $crate::utils::gl_err_to_str(err));
     }};
 }
 
@@ -71,4 +84,18 @@ pub fn link_programs(vs: GLuint, fs: GLuint) -> Res<GLuint> {
         }
     }
     Ok(program)
+}
+
+#[rustfmt::skip]
+pub fn ortho(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> [f32; 16] {
+    let tx = -(right + left) / (right - left);
+    let ty = -(top + bottom) / (top - bottom);
+    let tz = -(far + near) / (far - near);
+
+    [
+        2.0/(right - left),0.0,               0.0,            0.0,
+        0.0,               2.0/(top - bottom),0.0,            0.0,
+        0.0,               0.0,               -2.0/(far-near),0.0,
+        tx,                ty,                tz,             1.0
+    ]
 }
