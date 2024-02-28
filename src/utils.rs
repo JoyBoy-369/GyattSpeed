@@ -1,8 +1,10 @@
 use std::{ffi::CString, ptr, str};
 
-use gl::types::{GLchar, GLenum, GLint, GLuint};
+use gl::types::{GLchar, GLenum, GLfloat, GLint, GLuint};
 
 pub type Res<T> = Result<T, Box<dyn std::error::Error>>;
+
+pub type Vertex = [GLfloat; 13];
 
 pub fn gl_err_to_str(err: u32) -> &'static str {
     match err {

@@ -1,7 +1,5 @@
-use text_editor::init;
+use text_editor::{init::init, utils::Res};
 
-fn main() {
-    init();
+fn main() -> Res<()> {
+    init()
 }
-
-
